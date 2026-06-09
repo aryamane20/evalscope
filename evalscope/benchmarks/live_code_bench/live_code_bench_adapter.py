@@ -7,7 +7,7 @@ from evalscope.api.evaluator import TaskState
 from evalscope.api.messages.chat_message import ChatMessageUser
 from evalscope.api.metric import Score
 from evalscope.api.registry import register_benchmark
-from evalscope.constants import Tags
+from evalscope.constants import EvalType, Tags
 from evalscope.utils.io_utils import convert_normal_types
 from evalscope.utils.logger import get_logger
 
@@ -160,6 +160,12 @@ class LiveCodeBenchAdapter(DefaultDataAdapter):
             extracted_prediction=filtered_prediction,
             prediction=original_prediction,
         )
+
+        if self.eval_type == EvalType.MOCK_LLM:
+            score.value = {'acc': False}
+            score.explanation = 'MockLLM: skipping code execution'
+            score.main_score_name = 'acc'
+            return score
 
         if not self.use_sandbox:
             # Use original evaluation method
