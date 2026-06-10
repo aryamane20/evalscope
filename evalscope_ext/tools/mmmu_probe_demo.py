@@ -334,5 +334,5 @@ Reviewer commands (substitute a real model):
     --work-dir ./results_probe --no-timestamp
 
   # Probe report
-  python -m evalscope_ext.tools.mmmu_probe_report --work-dir ./results_probe/
+  python -m evalscope_ext.tools.mmmu_probe_report --work-dir /tmp/evalscope_probe_demo_signal
 """)
